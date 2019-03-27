@@ -28,7 +28,19 @@ namespace Subtegral.EscapeHouse.Editors
                 AssetDatabase.CreateAsset(itemDB, Database.GetDatabasePath());
             }
             Item item = CreateInstance<Item>();
-            item.Id = itemDB.Items.Max(x => x.Id)+1;
+            SetItemId(item, itemDB);
+            SaveItemToDatabase(item, itemDB);
+        }
+
+        private static void SetItemId(Item item,ItemDatabase itemDB)
+        {
+            if (itemDB.Items.Count > 0)
+                item.Id = itemDB.Items.Max(x => x.Id) + 1;
+            else
+                item.Id = 0;
+        }
+        private static void SaveItemToDatabase(Item item,ItemDatabase itemDB)
+        {
             AssetDatabase.AddObjectToAsset(item, itemDB);
             AssetDatabase.SaveAssets();
             AssetDatabase.ImportAsset(Database.GetDatabasePath());

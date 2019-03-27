@@ -3,18 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using Subtegral.EscapeHouse.Managers;
 using Subtegral.EscapeHouse;
+using XNode;
+
 namespace Subtegral.EscapeHouse.Graph
 {
-    public class RequestItemNode : AbstractExecutionNode
+    [CreateNodeMenu("Executions/Inventory/Require Item")]
+    public class RequestItemExecution : AbstractExecutionNode
     {
         public List<Item> Requests;
-        public int OpenScene;
+
+        [Output(connectionType =ConnectionType.Multiple)]
+        public ExecutionBranch ExecuteOnSuccess;
+
         public override void Execute()
         {
             if (InventoryManager.Instance.CheckItemExistance(Requests))
-                (graph as SceneGraph).SelectBranch(OpenScene);
+                (GetOutputPort("ExecuteOnSuccess").Connection.node as IExecutable).Execute();
             else
                 EventDispatcher.OnItemNotExists();
+        }
+
+        public override object GetValue(NodePort port)
+        {
+            return null;
         }
     }
 

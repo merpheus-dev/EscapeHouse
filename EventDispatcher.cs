@@ -7,6 +7,7 @@ namespace Subtegral.EscapeHouse
     public static class EventDispatcher
     {
         public static DisplayEvent OnItemNotExists;
+        public static EffectorEvent<Item> OnItemTaken;
     }
 
     public delegate void EffectorEvent<in T>(T t);
