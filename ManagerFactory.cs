@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using Subtegral.EscapeHouse.Managers
+using Subtegral.EscapeHouse.Managers;
 public static class ManagerFactory
 {
     public static T GetInstance<T>() where T:AbstractManager<T>

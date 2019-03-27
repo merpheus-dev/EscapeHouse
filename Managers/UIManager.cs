@@ -6,16 +6,15 @@ namespace Subtegral.EscapeHouse.Managers
 {
     public sealed class UIManager : AbstractManager<UIManager>, IContainer
     {
-        private Canvas _canvas;
-
+        private UIContainer _container;
         private List<Button> buttonPool = new List<Button>();
 
         private UIManager() { }
 
         public void Inject(object reference)
         {
-            if (reference is Canvas)
-                _canvas = reference as Canvas;
+            if (reference is UIContainer)
+                _container = reference as UIContainer;
         }
 
         private void Start()
@@ -27,14 +26,14 @@ namespace Subtegral.EscapeHouse.Managers
         {
             EventDispatcher.OnItemNotExists += () =>
             {
-
+                _container.DisplayError("I need something for this!");
             };
         }
 
         #region Buttons
         public Button GetButtonInstance(Button buttonPrefab)
         {
-            Button _instance = Instantiate(buttonPrefab, _canvas.transform, true);
+            Button _instance = Instantiate(buttonPrefab, _container.Canvas.transform, true);
             buttonPool.Add(_instance);
             return _instance;
         }

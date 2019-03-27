@@ -24,7 +24,7 @@ namespace Subtegral.EscapeHouse.Editors
                 {
                     AssetDatabase.RemoveObjectFromAsset(_db.Items[i]);
                     AssetDatabase.SaveAssets();
-                    AssetDatabase.ImportAsset(ItemEditor.GetDatabasePath());
+                    AssetDatabase.ImportAsset(Database.GetDatabasePath());
                     _db.Items.RemoveAt(i);
                 }
                 GUI.color = Color.white;
