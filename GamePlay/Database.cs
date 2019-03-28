@@ -5,20 +5,15 @@ public class Database
     private const string inventoryPath = "Assets/Resources/";
     private const string resourcesInventoryPath = "Inventory/";
     private const string databaseAssetFileName = "ItemDatabase.asset";
+    private const string databaseAssetFile = "ItemDatabase";
     private static ItemDatabase itemDB;
     public static Inventory CurrentInventory
     {
         get
         {
-            if (PlayerPrefs.HasKey(InventoryPlayerPrefsKey))
-            {
-                return ParseInventory(PlayerPrefs.GetString(InventoryPlayerPrefsKey));
-            }
-            else
-            {
+            if (Inventory.HasInstance)
                 return Inventory.GetInstance();
-            }
-
+            return ParseInventory(PlayerPrefs.GetString(InventoryPlayerPrefsKey, string.Empty));
         }
     }
 
@@ -31,23 +26,25 @@ public class Database
     {
         if (itemDB == null)
         {
-            itemDB = Resources.Load<ItemDatabase>(resourcesInventoryPath + databaseAssetFileName);
+            itemDB = Resources.Load<ItemDatabase>(resourcesInventoryPath + databaseAssetFile);
             if (itemDB == null)
-                throw new ItemDatabaseNotExistsException();
+                throw new ItemDatabaseNotExistsException(string.Format("ItemDatabase object cannot be found!"));
         }
         return itemDB;
     }
 
     private static Inventory ParseInventory(string inventoryHash)
     {
-        string[] splittedString = inventoryHash.Split('|');
-
         var inventoryInstance = Inventory.GetInstance();
 
-        var dbInstance = GetDatabaseInstance();
-        for (int i = 0; i < splittedString.Length; i++)
+        if (!string.IsNullOrEmpty(inventoryHash))
         {
-            inventoryInstance.AddItem(dbInstance.ParseItemFromIdString(splittedString[i]));
+            string[] splittedString = inventoryHash.Split('|');
+            var dbInstance = GetDatabaseInstance();
+            for (int i = 0; i < splittedString.Length; i++)
+            {
+                inventoryInstance.AddItem(dbInstance.ParseItemFromIdString(splittedString[i]));
+            }
         }
         return inventoryInstance;
     }

@@ -8,6 +8,7 @@ namespace Subtegral.EscapeHouse
     {
         public static DisplayEvent OnItemNotExists;
         public static EffectorEvent<Item> OnItemTaken;
+        public static EffectorEvent<Item> OnItemRemoved;
     }
 
     public delegate void EffectorEvent<in T>(T t);

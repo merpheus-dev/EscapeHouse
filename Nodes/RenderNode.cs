@@ -56,7 +56,7 @@ namespace Subtegral.EscapeHouse.Graph
         private void CheckBranchSizeWithIndex(int branchIndex)
         {
             if (branchPorts.Count() <= branchIndex)
-                throw new BranchNotExistsException();
+                throw new BranchNotExistsException("Index that you want to select appears to be not exists in current node.");
         }
 
         void IExecutable.Execute()

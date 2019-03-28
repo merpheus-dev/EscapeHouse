@@ -5,9 +5,14 @@ namespace Subtegral.EscapeHouse.Managers
 {
     public class InventoryManager : AbstractManager<InventoryManager>
     {
-        public Inventory Inventory = Database.CurrentInventory;
+        public Inventory Inventory;
 
+        private void Start()
+        {
+            Inventory = Database.CurrentInventory;
+        }
 
+        private InventoryManager() { }
 
         public bool CheckItemExistance(List<Item> requestedItems)
         {

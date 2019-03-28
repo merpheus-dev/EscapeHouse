@@ -15,11 +15,12 @@ namespace Subtegral.EscapeHouse.Managers
         private AudioManager audioManager;
         private UIManager guiManager;
         private InventoryManager inventoryManager;
-        void Start()
+        void Awake()
         {
             guiManager = ManagerFactory.GetInstance<UIManager>();
             audioManager = ManagerFactory.GetInstance<AudioManager>();
             graphExecutionMananager = ManagerFactory.GetInstance<GraphExecutionManager>();
+            inventoryManager = ManagerFactory.GetInstance<InventoryManager>();
             guiManager.Inject(UIContainer);
             graphExecutionMananager.Inject(Graph);
             Invoke("Begin", 1f);

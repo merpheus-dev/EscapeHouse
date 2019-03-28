@@ -7,8 +7,8 @@ using XNode;
 
 namespace Subtegral.EscapeHouse.Graph
 {
-    [CreateNodeMenu("Executions/Inventory/Require Item")]
-    public class RequestItemExecution : AbstractExecutionNode
+    [CreateNodeMenu(PathContainer.RequireItem)]
+    public class RequireItemExecution : AbstractExecutionNode
     {
         public List<Item> Requests;
 
@@ -20,7 +20,7 @@ namespace Subtegral.EscapeHouse.Graph
             if (InventoryManager.Instance.CheckItemExistance(Requests))
                 (GetOutputPort("ExecuteOnSuccess").Connection.node as IExecutable).Execute();
             else
-                EventDispatcher.OnItemNotExists();
+                EventDispatcher.OnItemNotExists?.Invoke();
         }
 
         public override object GetValue(NodePort port)

@@ -5,6 +5,13 @@ public class Inventory
 {
     private static Inventory _instance;
     private HashSet<Item> inventoryList = new HashSet<Item>();
+    public static bool HasInstance
+    {
+        get
+        {
+            return _instance != null;
+        }
+    }
 
     private Inventory() { }
 
