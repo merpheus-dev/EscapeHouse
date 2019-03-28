@@ -33,7 +33,7 @@ namespace Subtegral.EscapeHouse.Managers
         #region Buttons
         public Button GetButtonInstance(Button buttonPrefab)
         {
-            Button _instance = Instantiate(buttonPrefab, _container.Canvas.transform, true);
+            Button _instance = Instantiate(buttonPrefab, _container.Canvas.transform, false);
             buttonPool.Add(_instance);
             return _instance;
         }

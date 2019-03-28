@@ -41,6 +41,7 @@ namespace Subtegral.EscapeHouse.Graph
         public RenderNode GetConnectedNode(int branchIndex)
         {
             GetBranchingNodePortList();
+            CheckEmptyBranchPorts();
             CheckBranchSizeWithIndex(branchIndex);
             return branchPorts[branchIndex].Connection.node as RenderNode;
         }
@@ -49,8 +50,14 @@ namespace Subtegral.EscapeHouse.Graph
         {
             var portFiltered = InstancePorts.ToList();
             branchPorts = portFiltered
-                          .Where(x => x.IsConnected && x.Connection.node.GetType() == typeof(RenderNode))
+                          .Where(x => x.ValueType==typeof(ChoiceBranch))
                           .ToList();
+        }
+
+        private void CheckEmptyBranchPorts()
+        {
+            if (branchPorts.Any(x => !x.IsConnected))
+                throw new BranchPortNotConnectedException("[!] Active node's branch port(s) are not connected. Make sure that they are connected");
         }
 
         private void CheckBranchSizeWithIndex(int branchIndex)
